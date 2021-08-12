@@ -14,20 +14,19 @@ else
 
 //UC2
 let empHrs = 0;
-
-switch(empCheck)
+function getWorkingHours(empcheck)
 {
-    case FULL_TIME:
-        empHrs = FULL_TIME_HRS;
-        break;
-    case PART_TIME:
-        empHrs = PART_TIME_HRS;
-        break;
-    default:
-        empHrs = isAbsent;
-        break;
-        
+    switch(empCheck)
+    {
+        case FULL_TIME:
+           return FULL_TIME_HRS;
+        case PART_TIME:
+            return PART_TIME_HRS;
+        default:
+           return isAbsent;
+    }
 }
+//Calling getWorkingHours
 //calculate total wage based on emphrs
-let totalWage = empHrs*WAGE_PER_HR;
-console.log(`Uc2:\nTotal Wage = ${totalWage}`);
+let totalWage = getWorkingHours(empCheck)*WAGE_PER_HR;
+console.log(`Total Wage = ${totalWage}`);
