@@ -40,6 +40,7 @@ let day=0,totalemphrs=0;
 emphrs =0;
 //initalize empDailyWageArray to store daily wage
 let empDailyWageArray=new Array();
+let empDailyWageMap=new Map();
 //CalcDailywage to calculate daily wage of employee 
 let CalcDailywage=(emphrs)=>emphrs*WAGE_PER_HR;
 while(day++ <NO_OF_WORKING_DAYS && emphrs<=MAX_WORKING_HRS_IN_MONTH)
@@ -47,6 +48,7 @@ while(day++ <NO_OF_WORKING_DAYS && emphrs<=MAX_WORKING_HRS_IN_MONTH)
     emphrs = getWorkingHours();
     totalemphrs += emphrs;
     empDailyWageArray.push(CalcDailywage(emphrs));
+    empDailyWageMap.set(day,CalcDailywage(emphrs));
 }
 //calculating total emp wage
 let empWage=CalcDailywage(totalemphrs);
@@ -94,3 +96,9 @@ TotalDaysworked=(dayCount,dailyWage)=>{
     return dayCount;
 }
 console.log(`UC-7G Total Num of Employee Present: ${empDailyWageArray.reduce(TotalDaysworked,0)}`);
+
+//UC 8
+totalempWage=0;
+console.log(empDailyWageMap);
+CalctotalempWage=(totalempWage,dailyWage)=>totalempWage+dailyWage;
+console.log(`UC8-Calculate total Emp Wage using Map :${Array.from(empDailyWageMap.values()).reduce(CalctotalempWage,0)} `);
