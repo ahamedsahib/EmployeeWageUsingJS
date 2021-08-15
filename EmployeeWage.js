@@ -16,7 +16,7 @@ else
     console.log("Employee is present");
 
 //UC2-UC3
-let empHrs = 0;
+let emphrs = 0;
 function getWorkingHours()
 {
     empCheck=Math.floor(Math.random()*10)%3;
@@ -33,18 +33,21 @@ function getWorkingHours()
 //UC4   
 for (let day=0;day<NO_OF_WORKING_DAYS;day++)
 {
-    empHrs+= getWorkingHours();
+    emphrs+= getWorkingHours();
 }
 //UC5
-let day=0;
-empHrs =0;
-while(day++ <NO_OF_WORKING_DAYS && empHrs<=MAX_WORKING_HRS_IN_MONTH)
+let day=0,totalemphrs=0;
+emphrs =0;
+//initalize empDailyWageArray to store daily wage
+let empDailyWageArray=new Array();
+//CalcDailywage to calculate daily wage of employee 
+let CalcDailywage=(emphrs)=>emphrs*WAGE_PER_HR;
+while(day++ <NO_OF_WORKING_DAYS && emphrs<=MAX_WORKING_HRS_IN_MONTH)
 {
-    empHrs += getWorkingHours();
+    emphrs = getWorkingHours();
+    totalemphrs += emphrs;
+    empDailyWageArray.push(CalcDailywage(emphrs));
 }
-console.log(`Total days = ${day-1}`);
-console.log(`Total Employee Work hours in a Month = ${empHrs}`);
-//Calling getWorkingHours
-//calculate total wage based on emphrs
-let totalWage =empHrs*WAGE_PER_HR;
-console.log(`Total Wage = ${totalWage}`);
+//calculating total emp wage
+let empWage=CalcDailywage(totalemphrs);
+console.log(`TotalDays:${day} working hours:${totalemphrs} Total Wage:${empWage}`);
