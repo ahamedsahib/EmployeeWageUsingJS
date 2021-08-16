@@ -2,7 +2,6 @@ class EmployeePayrollData
 {
      //property
      id;
-     name;
      salary;
      gender;
      startDate;
@@ -16,8 +15,21 @@ class EmployeePayrollData
         this.startDate=params[4];
     }
      //getter and setter methods
-     get name() {  return this.name;}
-     set name(name) { this.name=name; }
+     get name() {  
+         return this._name;
+        }
+     set name(name) 
+     { 
+        let namePattern=RegExp('^[A-Z]{1}[a-z]{2,}$');//regex pattern to validate name
+        if(namePattern.test(name))
+        {
+        this._name=name;
+        }
+        else
+        {
+            throw "Incorrect name";//throw error if invalid
+        }
+     }
      //tostring method
      toString()
      {
@@ -29,8 +41,17 @@ class EmployeePayrollData
  console.log(employeePayrollData.toString());
  //change the name using getter and setter method
  console.log('After Updating Name');
- employeePayrollData.name="Messi";
- console.log(employeePayrollData.toString());
+ try
+{
+employeePayrollData.name='crist';
+console.log(employeePayrollData.toString());
+}
+catch(e)
+{
+    console.error(e);
+}
 
- let newEmployeePayrollData=new EmployeePayrollData(2,"Ahamed",8000,'M',new Date());
+ let newEmployeePayrollData=new EmployeePayrollData(2,"Ashfaq",8000,'M',new Date());
 console.log(newEmployeePayrollData.toString());
+
+
