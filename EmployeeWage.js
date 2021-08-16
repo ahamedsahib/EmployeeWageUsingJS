@@ -42,16 +42,33 @@ emphrs =0;
 let empDailyWageArray=new Array();
 let empDailyWageMap=new Map();
 let empDailyHourMap=new Map();
+let empWageAndHourArray=new Array();
+
 //CalcDailywage to calculate daily wage of employee 
 let CalcDailywage=(emphrs)=>emphrs*WAGE_PER_HR;
 while(day++ <NO_OF_WORKING_DAYS && emphrs<=MAX_WORKING_HRS_IN_MONTH)
 {
     emphrs = getWorkingHours();
     totalemphrs += emphrs;
-    empDailyWageArray.push(CalcDailywage(emphrs));
-    empDailyWageMap.set(day,CalcDailywage(emphrs));
+    let dailywage=CalcDailywage(emphrs);
+    empDailyWageArray.push(dailywage);
+    empDailyWageMap.set(day,dailywage);
     empDailyHourMap.set(day,emphrs);
+    //create own object and store all details
+    empWageAndHourArray.push(
+        {
+            Day:day,
+            DailyEmpHrs:emphrs,
+            DailyEmpWage:dailywage,
+            //tostring mthod to print the data
+            toString()
+            {
+                return `Day: ${this.Day}  Working hours: ${this.DailyEmpHrs}   Emp Wage : ${this.DailyEmpWage}\n`;
+            }
+        }
+        );
 }
+
 //calculating total emp wage
 let empWage=CalcDailywage(totalemphrs);
 console.log(`TotalDays:${day} working hours:${totalemphrs} Total Wage:${empWage}`);
@@ -126,3 +143,21 @@ empDailyHourMap.forEach((value,key)=>
 console.log("UC-9B Full time working days "+fullTime);
 console.log("UC-9B Part time working days "+partTime);
 console.log("UC-9B No working days "+noWorkingDay);
+//UC11A Finding Total hours and total wage using object
+let totalWages=empWageAndHourArray
+.filter(dailyHrsandWage=>dailyHrsandWage.DailyEmpWage>0)
+.reduce((totalwage,dailyHrsandWage)=>totalwage+=dailyHrsandWage.DailyEmpWage,0)
+console.log(`UC11 object creation ${totalWages}`);
+
+let totalHoursObject=empWageAndHourArray.filter(dailyHrsAndWage=>dailyHrsAndWage.DailyEmpHrs>0)
+                    .reduce((totalHrs,dailyHrsAndWage)=>totalHrs+=dailyHrsAndWage.DailyEmpHrs,0);
+console.log(`UC-11A Total empHrs : ${totalHoursObject}  Total wages : ${totalWages}`);
+//UC-11B  full time employee using object and arrow function
+console.log("UC-11B Full time working day of employee");
+empWageAndHourArray.filter(dailyHrsAndWage=>dailyHrsAndWage.DailyEmpHrs==8).forEach(dailyHrsAndWage=>process.stdout.write(dailyHrsAndWage.toString()));
+//UC-11C Details of part time employee using object and arrow function
+let partTimeDays=empWageAndHourArray.filter(dailyHrsAndWage=>dailyHrsAndWage.DailyEmpHrs==4).map(dailyHrsAndWage=>dailyHrsAndWage.toString());
+console.log(`UC-11C Part time working day \n${partTimeDays.join('')}`);
+//UC-11D Employee Absent day using object and arrow function
+let nonWorkingDay=empWageAndHourArray.filter(dailyHrsAndWage=>dailyHrsAndWage.DailyEmpHrs==0).map(dailyHrsAndWage=>dailyHrsAndWage.toString());
+console.log("UC-11D Employee Absent Day\n"+nonWorkingDay.join(''));
