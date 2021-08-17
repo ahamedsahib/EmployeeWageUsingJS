@@ -8,11 +8,22 @@ class EmployeePayrollData
     //constructor
     constructor(...params)
     {
-        this.id=params[0];
+        let idPattern = RegExp("^[1-9][0-9]{0,}$");
+        if (idPattern.test(params[0])) this.id = params[0];
+        else throw "Invalid Id";
+
         this.name=params[1];
-        this.salary=params[2];
-        this.gender=params[3];
-        this.startDate=params[4];
+        
+        if(params[2]>0) this.salary = params[2];
+        else throw "Invalid Salary cant be zero";
+        
+        let genderPattern = RegExp("^[M|F]$");
+        if(genderPattern.test(params[3])) this.gender = params[3];
+        else throw 'Invalid Gender';
+        
+        if(params[4]<=new Date())
+        this.startDate = params[4];
+        else throw 'Invalid date';
     }
      //getter and setter methods
      get name() {  
@@ -37,13 +48,13 @@ class EmployeePayrollData
      }
  }
  //creating a object for class 
- let employeePayrollData=new EmployeePayrollData(1,"Ahamed",5000);
+ let employeePayrollData=new EmployeePayrollData(1,"Ahamed",5000,'M',new Date());
  console.log(employeePayrollData.toString());
  //change the name using getter and setter method
  console.log('After Updating Name');
  try
 {
-employeePayrollData.name='crist';
+employeePayrollData.name='messi';
 console.log(employeePayrollData.toString());
 }
 catch(e)
@@ -51,7 +62,7 @@ catch(e)
     console.error(e);
 }
 
- let newEmployeePayrollData=new EmployeePayrollData(2,"Ashfaq",8000,'M',new Date());
+ let newEmployeePayrollData=new EmployeePayrollData(2,"Ashfaq",8000,'M',new Date('2021-09-16'));
 console.log(newEmployeePayrollData.toString());
 
 
